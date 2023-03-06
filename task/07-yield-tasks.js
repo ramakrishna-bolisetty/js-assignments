@@ -33,7 +33,17 @@
  *
  */
 function* get99BottlesOfBeer() {
-    throw new Error('Not implemented');
+    let index = 99;
+    while (index > 2) {
+        yield `${ index } bottles of beer on the wall, ${ index } bottles of beer.`;
+        yield `Take one down and pass it around, ${ --index } bottles of beer on the wall.`;
+    }
+    yield '2 bottles of beer on the wall, 2 bottles of beer.';
+    yield 'Take one down and pass it around, 1 bottle of beer on the wall.';
+    yield '1 bottle of beer on the wall, 1 bottle of beer.';
+    yield 'Take one down and pass it around, no more bottles of beer on the wall.';
+    yield 'No more bottles of beer on the wall, no more bottles of beer.';
+    yield 'Go to the store and buy some more, 99 bottles of beer on the wall.';
 }
 
 
@@ -47,7 +57,15 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    throw new Error('Not implemented');
+    let num1 = 0;
+    let num2 = 1;
+    let result;
+    while (1) {
+        result = num1;
+        num1 = num2;
+        num2 = result + num2;
+        yield result;
+    }
 }
 
 
@@ -82,7 +100,13 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
-    throw new Error('Not implemented');
+    let s = [root];
+    while (s.length > 0) {
+        let v = s.pop();
+        yield v;
+        if (!v.children) continue;
+        for (let edges of v.children.reverse()) s.push(edges);
+    }
 }
 
 
@@ -108,7 +132,15 @@ function* depthTraversalTree(root) {
  *
  */
 function* breadthTraversalTree(root) {
-    throw new Error('Not implemented');
+    let queue = [root];
+    for (let node of queue) {
+        yield node;
+        if (node.children) {
+            for (let child of node.children) {
+                queue.push(child);
+            }
+        }
+    }
 }
 
 
@@ -126,7 +158,21 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-    throw new Error('Not implemented');
+    const src1 = source1();
+    const src2 = source2();
+    let val1 = src1.next().value;
+    let val2 = src2.next().value;
+    while (true) {
+        if ((val1 < val2 || val2 === undefined) && val1 !== undefined) {
+            yield val1;
+            val1 = src1.next().value;
+        } else if (val2 !== undefined) {
+            yield val2;
+            val2 = src2.next().value;
+        } else {
+            break;
+        }
+    }
 }
 
 
