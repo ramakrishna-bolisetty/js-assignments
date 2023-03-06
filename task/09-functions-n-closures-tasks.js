@@ -67,10 +67,10 @@ function getPowerFunction(exponent) {
  *   getPolynom()      => null
  */
 function getPolynom() {
-  
+
     let arr = [].slice.call(arguments);
-    return (x)=>{
-        return arr.map((element, index) => element*Math.pow(x, (arr.length-(++index)))).reduce((pValue, cValue)=> pValue+cValue);
+    return (x) => {
+        return arr.map((element, index) => element * Math.pow(x, (arr.length - (++index)))).reduce((pValue, cValue) => pValue + cValue);
     }
 }
 
@@ -91,7 +91,7 @@ function getPolynom() {
  */
 function memoize(func) {
     let arr = func.apply(this, arguments);
-    return ()=> {return arr;}
+    return () => { return arr; }
 }
 
 
@@ -112,10 +112,13 @@ function memoize(func) {
  */
 function retry(func, attempts) {
     return () => {
-        for(let i = 0; i <= attempts; i++)
-        try {
-            return func();
-        }catch (e){}
+        let i = 0;
+        while (i <= attempts) {
+            try {
+                return func();
+            } catch (e) { }
+            i += 1;
+        }
     }
 }
 
@@ -144,14 +147,14 @@ function retry(func, attempts) {
  *
  */
 function logger(func, logFunc) {
-    return function() {
+    return function () {
         var arr = [].slice.call(arguments);
         var str = JSON.stringify(arr);
         //console.log(str);
-        str = str.slice(1,-1);
+        str = str.slice(1, -1);
         str = func.name + '(' + str + ')';
         logFunc(str + " starts");
-        var res= func.apply(this, arr);
+        var res = func.apply(this, arr);
         logFunc(str + " ends");
         return res;
     }
@@ -172,7 +175,7 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn) {
-    let arr1 = [].slice.call(arguments,1);
+    let arr1 = [].slice.call(arguments, 1);
     return function () {
         let arr2 = [].slice.call(arguments);
         return [].slice.call(arr1.concat(arr2)).join('');
@@ -197,10 +200,9 @@ function partialUsingArguments(fn) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    let id=startFrom;
-    return function()
-    {
-       return id++;
+    let id = startFrom;
+    return function () {
+        return id++;
     };
 }
 
