@@ -112,10 +112,13 @@ function memoize(func) {
  */
 function retry(func, attempts) {
     return () => {
-        for(let i = 0; i <= attempts; i++)
-        try {
-            return func();
-        }catch (e){}
+        let i=0;
+        while(i<=attempts){
+            try {
+                return func();
+            }catch (e){}
+            i+=1;
+        }
     }
 }
 
@@ -145,13 +148,13 @@ function retry(func, attempts) {
  */
 function logger(func, logFunc) {
     return function() {
-        var arr = [].slice.call(arguments);
-        var str = JSON.stringify(arr);
+        let arr = [].slice.call(arguments);
+        let str = JSON.stringify(arr);
         //console.log(str);
         str = str.slice(1,-1);
         str = func.name + '(' + str + ')';
         logFunc(str + " starts");
-        var res= func.apply(this, arr);
+        let res= func.apply(this, arr);
         logFunc(str + " ends");
         return res;
     }
@@ -198,10 +201,7 @@ function partialUsingArguments(fn) {
  */
 function getIdGeneratorFunction(startFrom) {
     let id=startFrom;
-    return function()
-    {
-       return id++;
-    };
+    return ()=>id++;
 }
 
 
