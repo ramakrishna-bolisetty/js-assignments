@@ -189,10 +189,3 @@ module.exports = {
   
 };
 
-
-module.exports = {
-    Rectangle: Rectangle,
-    getJSON: getJSON,
-    fromJSON: fromJSON,
-    cssSelectorBuilder: cssSelectorBuilder
-};

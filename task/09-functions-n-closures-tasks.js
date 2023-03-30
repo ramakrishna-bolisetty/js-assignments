@@ -68,7 +68,8 @@ function getPowerFunction(exponent) {
  */
 function getPolynom() {
 
-    let arr = [].slice.call(arguments);
+    // let arr = [].slice.call(arguments);
+    let arr=[...arguments]
     return (x) => {
         return arr.map((element, index) => element * Math.pow(x, (arr.length - (++index)))).reduce((pValue, cValue) => pValue + cValue);
     }
@@ -201,9 +202,7 @@ function partialUsingArguments(fn) {
  */
 function getIdGeneratorFunction(startFrom) {
     let id = startFrom;
-    return function () {
-        return id++;
-    };
+    return ()=>id++;
 }
 
 
